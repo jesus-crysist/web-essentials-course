@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Non-accessible HTML document</title>
+</head>
+<body>
+
+<!-- Semantics and UI controls -->
+<div class="btn" data-message="Play the video!">Play video</div>
+<div class="btn" data-message="This is from the first button">Click me!</div>
+<div class="btn" data-message="This is from the second button">Click me too!</div>
+<div class="btn" data-message="This is from the third button">And me!</div>
+
+<script>
+  const buttons = document.getElementsByClassName('btn');
+
+  for (let i = 0; i < buttons.length; i++) {
+    const message = buttons[i].getAttribute('data-message');
+
+    if (message) {
+      buttons[i].addEventListener('click', () => alert(message));
+    }
+  }
+
+</script>
+
+
+<!-- Text content -->
+<font size="7">My heading</font>
+<br><br>
+This is the first section of my document.
+<br><br>
+I'll add another paragraph here too.
+<br><br>
+1. Here is
+<br><br>
+2. a list for
+<br><br>
+3. you to read
+<br><br>
+<font size="5">My subheading</font>
+<br><br>
+This is the first subsection of my document. I'd love people to be able to find this content!
+<br><br>
+<font size="5">My 2nd subheading</font>
+<br><br>
+This is the second subsection of my content. I think is more interesting than the last one.
+
+
+<!-- Page layout -->
+<table width="1200">
+  <!-- main heading row -->
+  <tr id="heading">
+    <td colspan="6">
+
+      <h1 align="center">Header</h1>
+
+    </td>
+  </tr>
+  <!-- nav menu row  -->
+  <tr id="nav" bgcolor="#ffffff">
+    <td width="200">
+      <a href="#" align="center">Home</a>
+    </td>
+    <td width="200">
+      <a href="#" align="center">Our team</a>
+    </td>
+    <td width="200">
+      <a href="#" align="center">Projects</a>
+    </td>
+    <td width="200">
+      <a href="#" align="center">Contact</a>
+    </td>
+    <td width="300">
+      <form width="300">
+        <input type="search" name="q" placeholder="Search query" width="300">
+      </form>
+    </td>
+    <td width="100">
+      <button width="100">Go!</button>
+    </td>
+  </tr>
+  <!-- spacer row -->
+  <tr id="spacer" height="10">
+    <td>
+
+    </td>
+  </tr>
+  <!-- main content and aside row -->
+  <tr id="main">
+    <td id="content" colspan="4" bgcolor="#ffffff">
+
+      <!-- main content goes here -->
+    </td>
+    <td id="aside" colspan="2" bgcolor="#ff80ff" valign="top">
+      <h2>Related</h2>
+
+      <!-- aside content goes here -->
+
+    </td>
+  </tr>
+  <!-- spacer row -->
+  <tr id="spacer" height="10">
+    <td>
+
+    </td>
+  </tr>
+  <!-- footer row -->
+  <tr id="footer" bgcolor="#ffffff">
+    <td colspan="6">
+      <p>©Copyright 2050 by nobody. All rights reversed.</p>
+    </td>
+  </tr>
+</table>
+
+
+<!-- Forms -->
+<form>
+  Fill in your name: <input type="text" id="name" name="name">
+</form>
+
+
+<!-- Image's alternative text -->
+<img src="kittens.jpg" />
+
+
+
+
+</body>
+</html>
