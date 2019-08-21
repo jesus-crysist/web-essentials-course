@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head>
+    <meta charset="utf-8">
+    <title>Article of the day</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <meta name="theme-color" content="#fafafa">
+
+    <script defer src="js/main.js"></script>
+  </head>
+</head>
+<body>
+
+<header>
+  <h1>Cicero's blog</h1>
+  <h2>63 BC</h2>
+
+  <nav>
+    <ul>
+      <li>
+        <a href="index.html">Home</a>
+      </li>
+
+      <li>
+        <a href="#">Article of the day</a>
+      </li>
+
+      <li>
+        <a href="#">About me</a>
+      </li>
+
+    </ul>
+  </nav>
+
+</header>
+
+<main>
+
+  <article>
+
+    <header>
+      <h1>This is article of the day</h1>
+
+      <div class="author-wrapper">
+        <img src="img/cicero-profile.jpg" width="100" alt="Author's profile picture." />
+        <p class="author">Author: Cicero</p>
+        <time>2019-08-20</time>
+      </div>
+
+    </header>
+
+    <section>
+      <header>
+        <h2>Lipsum 1</h2>
+      </header>
+
+      <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam bibendum leo arcu, id vestibulum felis venenatis.</p>
+      <p>Duis rhoncus, libero eu viverra tempus, lectus diam aliquet neque, et scelerisque est justo ut nibh. Aliquam tempor sem in.</p>
+      <p>Sed efficitur libero non leo dictum finibus. Sed a elit neque. Praesent commodo, dolor sed vestibulum porttitor, nisl neque posuere.</p>
+
+      <p>Nunc consectetur nisi a purus tristique, ac ornare felis interdum. Morbi leo nisi, vulputate sit amet varius a, fermentum a.</p>
+      <p>Phasellus vel lobortis ante. Fusce pulvinar nunc at lorem vulputate, ac commodo ante imperdiet. Nunc ut ipsum id neque porta.</p>
+    </section>
+
+    <section id="comments">
+      <header>
+        <h3>Comments <span class="comment-count">(45)</span></h3>
+      </header>
+
+      <form class="add-comment" method="POST" action="/submit-comment">
+
+        <div>
+          <label for="comment-title">Title:</label>
+          <input type="text" id="comment-title" name="title" />
+        </div>
+
+        <div>
+          <label for="comment-author">Author:</label>
+          <input type="text" id="comment-author" name="author" />
+        </div>
+
+        <div>
+          <label for="comment-body">Comment text:</label>
+          <textarea id="comment-body" name="comment-text" data-test="body of the comment"></textarea>
+        </div>
+
+      </form>
+
+      <article class="comment">
+
+        <header>
+          <h1>First!</h1>
+          <div class="author-wrapper">
+            <img src="img/cicero-profile.jpg" width="100" alt="Author's profile picture." />
+            <p class="author">Author: Cicero</p>
+            <time>2019-08-20</time>
+          </div>
+        </header>
+
+        <p>First comment!</p>
+
+      </article>
+
+      <article class="comment">
+
+        <header>
+          <h1>Darn it!</h1>
+          <div class="author-wrapper">
+            <img src="img/marcus-antonius.jpg" width="100" alt="Author's profile picture." />
+            <p class="author">Author: Markus Antonius</p>
+            <time>2019-08-20</time>
+          </div>
+        </header>
+
+        <p>I was late... I hate you!</p>
+
+      </article>
+
+    </section>
+
+  </article>
+
+  <aside id="ads">
+    <p>Buy some of <a href="https://www.alpinewines.co.uk/alpineshop/alte-reben.html">my wine</a>.</p>
+  </aside>
+
+</main>
+
+<footer>
+
+  <nav>
+    <ul>
+      <li>
+        <a href="index.html">Home</a>
+      </li>
+
+      <li>
+        <a href="#">Article of the day</a>
+      </li>
+
+      <li>
+        <a href="#">About me</a>
+      </li>
+
+    </ul>
+  </nav>
+
+  <p>Copyryght &copy; Nortal</p>
+
+</footer>
+
+</body>
+</html>
