@@ -5,3 +5,5 @@
 .htaccess
 
 browserconfig.xml
+
+*.iml
