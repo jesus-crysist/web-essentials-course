@@ -25,4 +25,35 @@
 // https://en.wikipedia.org/wiki/Binary_GCD_algorithm
 function gcd(u, v) {
 
+  if (u === v) {
+    return u;
+  }
+
+  if (u === 0) {
+    return v;
+  }
+
+  if (v === 0) {
+    return u;
+  }
+
+  if (~u & 1) { // a is even
+
+    if (v & 1) { // b is odd
+      return gcd(u >> 1, v);
+    } else { // both u and v are even
+      return gcd(u >> 1, v >> 1) << 1;
+    }
+  }
+
+  if (~v & 1) { // a is odd, b is even
+    return gcd(u, v >> 1);
+  }
+
+  // reduce larger argument
+  if (u > v) {
+    return gcd((u - v) >> 1, v);
+  }
+
+  return gcd((v - u) >> 1, u);
 }
