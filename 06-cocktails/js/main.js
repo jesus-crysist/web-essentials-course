@@ -1,10 +1,13 @@
-function searchCocktails(filter) {
+document.getElementById('filterForm').onsubmit = searchCocktails;
 
-  const cocktailsUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?';
+function searchCocktails(event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const cocktailsUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php';
 
   // get param for cocktail name - "s"
   // get param for ingredient name - "i"
-
 }
 
 function listIngredients() {
