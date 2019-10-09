@@ -2,6 +2,15 @@ document.getElementById('filterForm').onsubmit = searchCocktails;
 
 function craftUrl(base, params) {
   // append params as GET query params to base url and return string
+  let url = base + '?';
+
+  for(let p in params) {
+    if (params.hasOwnProperty(p)) {
+      url += (p + '=' + params[p]);
+    }
+  }
+
+  return url;
 }
 
 function searchCocktails(event) {
@@ -15,6 +24,21 @@ function searchCocktails(event) {
 
   // grab values from form inputs and set values in "params" object
   let params = {};
+  const nameVal = document.getElementById('name').value;
+  const ingredientVal = document.getElementById('ingredient').value;
+
+  if (nameVal) {
+    params = {
+      s: nameVal
+    };
+  }
+
+  if (ingredientVal) {
+    params = {
+      ...params,
+      i: ingredientVal
+    };
+  }
 
   const url = craftUrl(cocktailsUrl, params);
 
@@ -25,16 +49,43 @@ function searchCocktails(event) {
 
 function searchCocktailsAjax(url) {
   // call doRequest and print result in console
+  doRequest(
+    url,
+    (responseJson) => console.log('json', responseJson),
+    (error) => console.log(error)
+  );
 }
 
 function doRequest(url, successCallback, errorCallback) {
   // send request to given URL and call callbacks when appropriate response is returned
+  const httpRequest = new XMLHttpRequest();
+
+  httpRequest.addEventListener('readystatechange', () => {
+
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+
+      if (httpRequest.status === 200) {
+        const responseJson = JSON.parse(httpRequest.responseText || '{}');
+        successCallback(responseJson);
+      } else if (errorCallback) {
+        errorCallback(
+          new Error(`HTTP error, code: ${httpRequest.status}, message: ${httpRequest.statusText}`)
+        );
+      }
+    }
+  });
 }
 
 function searchCocktailsPromise(url) {
 
   // return promise that calls doRequest
-
+  return new Promise((resolve, reject) => {
+    doRequest(
+      url,
+      (responseJson) => resolve(responseJson),
+      (error) => reject(error)
+    )
+  });
 }
 
 function listIngredients() {
