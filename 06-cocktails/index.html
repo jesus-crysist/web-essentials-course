@@ -37,7 +37,7 @@
 
         <div>
           <label for="ingredient">Cocktail ingredient:</label>
-          <input id="ingredient" name="ingredient" type="text" />
+          <select id="ingredient" name="ingredient"></select>
         </div>
 
         <div>
@@ -47,9 +47,19 @@
       </form>
     </header>
 
-    <ul id="cocktailList">
+    <table id="cocktailTable">
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Alcoholic</th>
+          <th>Tags</th>
+        </tr>
+      </thead>
 
-    </ul>
+      <tbody></tbody>
+    </table>
 
   </article>
 
