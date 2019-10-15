@@ -1,14 +1,17 @@
-document.getElementById('filterForm').onsubmit = searchCocktails;
+document.getElementById('filterForm').addEventListener('submit', searchCocktails);
 
 function craftUrl(base, params) {
   // append params as GET query params to base url and return string
   let url = base + '?';
+  let paramArray = [];
 
   for(let p in params) {
     if (params.hasOwnProperty(p)) {
-      url += (p + '=' + params[p]);
+      paramArray.push(p + '=' + params[p]);
     }
   }
+
+  url += paramArray.join('&');
 
   return url;
 }
@@ -17,7 +20,7 @@ function searchCocktails(event) {
   event.preventDefault();
   event.stopPropagation();
 
-  const cocktailsUrl = 'https://www.thecocktaildb.com/api/json/v1/1/sarch.php';
+  const cocktailsUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php';
 
   // get param for cocktail name - "s"
   // get param for ingredient name - "i"
@@ -74,6 +77,9 @@ function doRequest(url, successCallback, errorCallback) {
       }
     }
   });
+
+  httpRequest.open('GET', url);
+  httpRequest.send(null);
 }
 
 function searchCocktailsPromise(url) {
