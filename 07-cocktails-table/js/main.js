@@ -1,5 +1,7 @@
 document.getElementById('filterForm').addEventListener('submit', searchCocktails);
 
+listIngredients();
+
 function craftUrl(base, params) {
   // append params as GET query params to base url and return string
   let url = base + '?';
