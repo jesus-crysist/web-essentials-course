@@ -1,16 +1,16 @@
+function sumDigits(digits) {
+  let result = 0;
+
+  digits.forEach((d, index) => {
+    result += ((d === '2' ? -1 : Number.parseInt(d, 3)) * Math.pow(3, index));
+  }, 0);
+
+  return result;
+}
+
 function balancedTernary(len) {
 
   const arr = [];
-
-  const sumDigits = (digits) => {
-    let result = 0;
-
-    digits.forEach((d, index) => {
-      result += ((d === '2' ? -1 : Number.parseInt(d, 3)) * Math.pow(3, index));
-    }, 0);
-
-    return result;
-  };
 
   for (let n = 0; n < len; n++) {
 
@@ -24,22 +24,22 @@ function balancedTernary(len) {
   return arr;
 }
 
+function getProductOfDigits(num) {
+  const digitsStr = num.toString();
+  const digitsArr = digitsStr.split('');
+  return digitsArr.reduce((val, d) => val * (d !== '0' ? Number.parseInt(d) : 1), 1);
+}
+
 function wisteria(len) {
 
   const arr = [];
 
-  const digitMultiplication = (num) => {
-    const digitsStr = num.toString();
-    const digitsArr = digitsStr.split('');
-    return digitsArr.reduce((val, d) => val * (d !== '0' ? Number.parseInt(d) : 1), 1);
-  };
-
   for (let n = 1; n < len; n++) {
 
     if (n > 9) {
-      let result = digitMultiplication(n);
+      let digitMultiplication = getProductOfDigits(n);
 
-      arr.push(n - result)
+      arr.push(n - digitMultiplication)
     } else {
       arr.push(0);
     }

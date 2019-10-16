@@ -1,0 +1,60 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+  <header>
+    <h1>Cocktails</h1>
+    <p>List of cocktails</p>
+  </header>
+
+  <article>
+
+    <header>
+
+      <form id="filterForm">
+
+        <div>
+          <label for="name">Cocktail name:</label>
+          <input id="name" name="name" type="text" />
+        </div>
+
+        <div>
+          <label for="ingredient">Cocktail ingredient:</label>
+          <input id="ingredient" name="ingredient" type="text" />
+        </div>
+
+        <div>
+          <button type="submit">Find cocktail</button>
+        </div>
+
+      </form>
+    </header>
+
+    <ul id="cocktailList">
+
+    </ul>
+
+  </article>
+
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
