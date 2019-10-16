@@ -1,22 +1,80 @@
 function balancedTernary(len) {
 
-  return [];
+  const arr = [];
+
+  const sumDigits = (digits) => {
+    let result = 0;
+
+    digits.forEach((d, index) => {
+      result += ((d === '2' ? -1 : Number.parseInt(d, 3)) * Math.pow(3, index));
+    }, 0);
+
+    return result;
+  };
+
+  for (let n = 0; n < len; n++) {
+
+    const ternaryStr = n.toString(3);
+    const terStrDigits = ternaryStr.split('');
+    const terDigitsRevert = terStrDigits.reverse();
+
+    arr.push(sumDigits(terDigitsRevert));
+  }
+
+  return arr;
 }
 
 function wisteria(len) {
 
-  return [];
+  const arr = [];
+
+  const digitMultiplication = (num) => {
+    const digitsStr = num.toString();
+    const digitsArr = digitsStr.split('');
+    return digitsArr.reduce((val, d) => val * (d !== '0' ? Number.parseInt(d) : 1), 1);
+  };
+
+  for (let n = 1; n < len; n++) {
+
+    if (n > 9) {
+      let result = digitMultiplication(n);
+
+      arr.push(n - result)
+    } else {
+      arr.push(0);
+    }
+  }
+
+  return arr;
 }
 
 function flyStraight(len) {
 
-  return [];
+  const arr = [];
+
+  for (let n = 0; n < len; n++) {
+
+    if (n === 0 || n === 1) {
+      arr.push(1);
+      continue;
+    }
+
+    const prevN = arr[n - 1];
+    const gcdOfNAndPrevN = gcd(n, prevN);
+
+    if (gcdOfNAndPrevN > 1) {
+      arr.push(prevN / gcdOfNAndPrevN);
+    } else {
+      arr.push(arr[n - 1] + n + 1);
+    }
+  }
+
+  return arr;
 }
 
 function drawGraph(func) {
 
   const data = func(2000);
-  console.log(data.slice(0, 100));
   const width = 960;
   const height = 500;
   const margin = {top: 20, right: 0, bottom: 30, left: 40};
