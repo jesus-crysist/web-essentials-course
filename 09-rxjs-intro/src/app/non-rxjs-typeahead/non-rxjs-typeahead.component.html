@@ -1,0 +1,15 @@
+<div>
+  <label for="countrySearchByName">Search country by name:</label>
+  <input
+    type="text"
+    id="countrySearchByName"
+    name="countrySearchByName"
+    (keyup)="searchForCountryByName($event)"
+  />
+</div>
+
+<ul>
+  <li *ngFor="let c of countryList">
+    <img [src]="c.flag" alt="c.name" height="15" /> {{ c.name }} ({{ c.capital }})
+  </li>
+</ul>
