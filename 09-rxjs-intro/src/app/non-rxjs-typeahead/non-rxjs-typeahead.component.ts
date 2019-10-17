@@ -11,6 +11,8 @@ export class NonRxjsTypeaheadComponent implements OnInit {
 
   countryList: Array<CountryModel>;
 
+  timer: any;
+
   constructor(
     private countryService: NonRxjsCountrySearchService
   ) { }
@@ -23,11 +25,26 @@ export class NonRxjsTypeaheadComponent implements OnInit {
     event.preventDefault();
 
     // get input value from event's target
+    let inputVal = (event.target as HTMLInputElement).value;
+
     // do search only after user has stopped typing for 400 milliseconds
-    // and trim input value for spaces
-    // and if there are more than 3 characters
-    // call service's "searchCountryByName"
-    // received result assign to "countryList"
+    clearTimeout(this.timer);
+
+    this.timer = setTimeout(() => {
+
+      // and trim input value for spaces
+      inputVal = inputVal.trim();
+
+      // and if there are more than 3 characters
+      if (inputVal.length < 3) {
+        return;
+      }
+
+      // call service's "searchCountryByName"
+      this.countryService.searchCountryByName(inputVal)
+        // received result assign to "countryList"
+        .then((countries) => this.countryList = countries);
+    }, 400);
   }
 
 }
