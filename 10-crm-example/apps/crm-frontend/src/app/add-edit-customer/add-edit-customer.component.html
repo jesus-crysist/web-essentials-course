@@ -1,0 +1,106 @@
+<form #form="ngForm">
+
+  <div class="ui-g">
+    <label for="customerName" class="ui-g-3 required">Customer name</label>
+    <input
+      pInputText
+      id="customerName"
+      name="name"
+      [(ngModel)]="formCustomer.name"
+      class="ui-g-9"
+    />
+  </div>
+
+  <div class="ui-g">
+    <label for="customerType" class="ui-g-3 required">Customer type</label>
+    <p-dropdown
+      id="customerType"
+      [options]="customerTypes"
+      name="customerType"
+      [(ngModel)]="formCustomer.customerType"
+      placeholder="- Select -"
+      class="ui-g-9"
+    ></p-dropdown>
+  </div>
+
+  <div class="ui-g">
+    <label for="identityType" class="ui-g-3">Identity</label>
+    <p-dropdown
+      id="identityType"
+      [options]="identityTypes"
+      name="identityType"
+      [(ngModel)]="formCustomer.identityType"
+      placeholder="- Select -"
+      class="ui-g-4"
+    ></p-dropdown>
+    <input
+      pInputText
+      id="identityNumber"
+      name="identityNumber"
+      [(ngModel)]="formCustomer.identityNumber"
+      class="ui-g-5"
+    />
+  </div>
+
+  <div class="ui-g">
+    <label for="country" class="ui-g-3">Country</label>
+    <p-dropdown
+      id="country"
+      [options]="countries"
+      name="country"
+      [(ngModel)]="formCustomer.country"
+      optionLabel="name"
+      dataKey="name"
+      placeholder="- Select -"
+      class="ui-g-9"
+    >
+    </p-dropdown>
+  </div>
+
+  <div class="ui-g">
+    <label for="citizen" class="ui-g-3">Citizen</label>
+    <p-inputSwitch
+      id="citizen"
+      name="citizen"
+      [(ngModel)]="formCustomer.citizen"
+      class="ui-g-9"
+    ></p-inputSwitch>
+  </div>
+
+  <div class="ui-g">
+    <label for="registrationDate" class="ui-g-3">Registration date</label>
+    <p-calendar
+      id="registrationDate"
+      name="registrationDate"
+      [(ngModel)]="formCustomer.registrationDate"
+      dateFormat="dd/mm/yy"
+      class="ui-g-9"
+    ></p-calendar>
+  </div>
+
+  <div class="ui-g">
+    <label for="customerStatus" class="ui-g-3 required">Status</label>
+    <p-dropdown
+      id="customerStatus"
+      [options]="customerStatuses"
+      name="status"
+      [(ngModel)]="formCustomer.status"
+      placeholder="- Select -"
+      class="ui-g-9"
+    ></p-dropdown>
+  </div>
+
+  <p-toolbar>
+
+    <div class="ui-toolbar-group-left">
+      <button pButton (click)="goBackToList()" label="Go back"></button>
+    </div>
+
+    <div class="ui-toolbar-group-right">
+      <button pButton (click)="saveCustomer()" label="Save" [disabled]="form.invalid"></button>
+    </div>
+  </p-toolbar>
+
+  <p-toast position="top-right"></p-toast>
+
+</form>

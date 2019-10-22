@@ -1,58 +1,56 @@
-import { Component } from '@angular/core';
-import { Customer, CustomerStatus, CustomerType } from '@crm-example/api-interfaces';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Customer, CustomerStatus, CustomerType, IdentityType } from '@crm-example/api-interfaces';
+import { Observable, of } from 'rxjs';
+import { CustomerService } from './customer.service';
 
 @Component({
   selector: 'crm-example-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  private readonly baseUrl = 'http://localhost:3333/api/customers';
+  customerList$: Observable<Array<Customer>>;
+  countries$: Observable<any[]>;
 
-  customers$: BehaviorSubject<Array<Customer>> = new BehaviorSubject([]);
+  selectedCustomer$: Observable<Customer>;
+  displayCustomerForm: boolean;
 
-  constructor() {
-
-    // `${this.baseUrl}/search?name=ar`
-    fetch(`${this.baseUrl}/all`)
-      .then(this.parseResponse)
-      .then((jsonBody: Customer[]) => {
-        this.customers$.next(jsonBody);
-      })
-      .catch(err => console.error(err));
+  constructor(
+    private customerService: CustomerService
+  ) {
   }
 
-  addCustomer(): void {
+  ngOnInit(): void {
+    this.customerList$ = this.customerService.searchCustomers({});
+    this.countries$ = this.customerService.getAllCountries();
+  }
 
-    const customer: Customer = {
-      name: 'Perica',
-      customerType: CustomerType.INDIVIDUAL,
-      status: CustomerStatus.ACTIVE
+  filterCustomers(filter?: Customer): void {
+    this.customerList$ = this.customerService.searchCustomers(filter);
+    this.displayCustomerForm = false;
+  }
+
+  showAddEditForm(customerId: number): void {
+    if (customerId) {
+      this.selectedCustomer$ = this.customerService.getCustomerById(customerId);
+    } else {
+      this.selectedCustomer$ = of({} as Customer)
+    }
+    this.displayCustomerForm = true;
+  }
+
+  saveCustomer(changedCustomer: Customer): void {
+
+    const customer = {
+      ...changedCustomer,
+      country: changedCustomer.country.name,
+      customerType: CustomerType[changedCustomer.customerType],
+      identityType: IdentityType[changedCustomer.identityType],
+      status: CustomerStatus[changedCustomer.status]
     };
 
-    fetch(this.baseUrl, {
-      method: 'POST',
-      body: JSON.stringify(customer),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accepted': 'application/json'
-      }
-    })
-      .then(this.parseResponse)
-      .then((cust: Customer) => {
-        const currentCustomers = this.customers$.getValue();
-        this.customers$.next([...currentCustomers, cust]);
-      })
-      .catch(err => console.log(err));
-  }
-
-  parseResponse(response: Response): Promise<any> {
-    if (response.status === 200 || response.status === 201) {
-      return response.json();
-    } else {
-      throw new Error('Error fetching customer data');
-    }
+    this.customerService.saveCustomer(customer)
+      .subscribe(() => this.filterCustomers());
   }
 }

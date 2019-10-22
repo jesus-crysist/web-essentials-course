@@ -1,0 +1,8 @@
+:host {
+  margin: 15px;
+}
+
+:host .required:after {
+  content: '*';
+  color: #dc3f20;
+}

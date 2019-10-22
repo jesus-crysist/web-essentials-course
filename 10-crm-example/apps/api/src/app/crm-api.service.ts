@@ -59,6 +59,23 @@ export class CrmApiService {
     return customer;
   }
 
+  updateCustomer(customer: Customer): Customer {
+
+    if (!customer.id) {
+      throw new HttpException('Customer ID is necessary to update customer data', HttpStatus.BAD_REQUEST);
+    } else if (!customer.name || !customer.status) {
+      const missingValue = !customer.name ? 'name' : 'status';
+      throw new HttpException(`Mandatory field "${missingValue}" is missing!`, HttpStatus.BAD_REQUEST);
+    }
+
+    const existingCustomer = this.customerList.find(c => c.id === customer.id);
+    const existingCustomerId = this.customerList.indexOf(existingCustomer);
+
+    this.customerList.splice(existingCustomerId, 1, customer);
+
+    return customer;
+  }
+
   private searchCustomersByProperty(customerList: Array<Customer>, prop: string, value: string): Array<Customer> {
 
     return prop && value && value.length > 0 ?
