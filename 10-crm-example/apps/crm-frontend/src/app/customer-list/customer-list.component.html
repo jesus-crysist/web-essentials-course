@@ -16,24 +16,39 @@
 
   <div class="ui-toolbar-group-left">
 
-    <form class="filter-form" (ngSubmit)="filterCustomers()">
+    <form
+      [formGroup]="filterForm"
+      class="filter-form"
+      (ngSubmit)="filterCustomers()"
+    >
 
       <span class="filter-list">
 
         <span class="filter-item">
           <label for="nameFilter">Name:</label>
-          <input type="text" id="nameFilter" name="name" [(ngModel)]="customer.name"/>
+          <input
+            type="text"
+            id="nameFilter"
+            name="name"
+            formControlName="name"
+          />
         </span>
 
         <span class="filter-item">
           <label for="identityFilter">Identity:</label>
-          <input type="text" id="identityFilter" name="identity" [(ngModel)]="customer.identityNumber"/>
+          <input
+            type="text"
+            id="identityFilter"
+            name="identity"
+            formControlName="identityNumber"
+          />
         </span>
 
       </span>
 
       <span class="filter-button-wrapper">
-        <button pButton type="submit" label="Find"></button>
+        <button pButton type="submit" class="ui-button-rounded" label="Find"></button>
+        <button pButton type="button" class="ui-button-secondary ui-button-rounded" label="Clear" (click)="clearFilters()"></button>
       </span>
 
     </form>

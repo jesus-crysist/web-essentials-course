@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Customer, CustomerStatus, CustomerType, IdentityType } from '@crm-example/api-interfaces';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'crm-example-add-customer',
@@ -14,13 +16,16 @@ export class AddEditCustomerComponent implements OnInit, OnChanges {
   @Output() goBack: EventEmitter<void> = new EventEmitter<void>();
   @Output() save: EventEmitter<Customer> = new EventEmitter<Customer>();
 
-  formCustomer: Customer = {} as Customer;
+  customerForm: FormGroup;
 
   customerTypes: Array<{ label: string, value: string }>;
   identityTypes: Array<{ label: string, value: string }>;
   customerStatuses: Array<{ label: string, value: string }>;
 
-  constructor() {
+  constructor(
+    private fb: FormBuilder,
+    private messageService: MessageService
+  ) {
   }
 
   ngOnInit(): void {
@@ -32,29 +37,60 @@ export class AddEditCustomerComponent implements OnInit, OnChanges {
     this.customerStatuses = Object.keys(CustomerStatus)
       .map(key => ({label: CustomerStatus[key], value: key}));
 
+    this.createForm();
   }
 
   ngOnChanges(): void {
-    if (this.customer) {
-      this.formCustomer = {
+
+    let formCustomer = {} as Customer;
+
+    if (this.customer && this.countries) {
+      formCustomer = {
         ...this.customer,
         customerType: this.customer.customerType && Object.keys(CustomerType).find(key => this.customer.customerType === CustomerType[key]),
         identityType: this.customer.identityType && Object.keys(IdentityType).find(key => this.customer.identityType === IdentityType[key]),
         status: this.customer.status && Object.keys(CustomerStatus).find(key => this.customer.status === CustomerStatus[key]),
-        registrationDate: this.customer.registrationDate && new Date(this.customer.registrationDate)
+        registrationDate: this.customer.registrationDate && new Date(this.customer.registrationDate),
+        country: this.customer.country && this.countries.find(c => c.name === this.customer.country)
       } as Customer;
-    } else {
-      this.formCustomer = {} as Customer;
+    }
+
+    if (this.customerForm) {
+      this.customerForm.patchValue(formCustomer);
     }
   }
 
   saveCustomer(): void {
-    this.save.emit(this.customer);
-    this.customer = {} as Customer;
+
+    if (this.customerForm.invalid) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Invalid form',
+        detail: 'Please fill in required fields before submitting form.'
+      });
+      return;
+    }
+
+    this.save.emit(this.customerForm.value);
+    this.customerForm.reset();
   }
 
   goBackToList(): void {
     this.goBack.emit();
+  }
+
+  private createForm(): void {
+    this.customerForm = this.fb.group({
+      id: [null],
+      name: [null, Validators.required],
+      customerType: [null, Validators.required],
+      identityNumber: [null],
+      identityType: [null],
+      country: [null],
+      citizen: [null],
+      registrationDate: [null],
+      status: [null, Validators.required]
+    });
   }
 
 }

@@ -1,4 +1,4 @@
-<form #form="ngForm">
+<form [formGroup]="customerForm">
 
   <div class="ui-g">
     <label for="customerName" class="ui-g-3 required">Customer name</label>
@@ -6,7 +6,7 @@
       pInputText
       id="customerName"
       name="name"
-      [(ngModel)]="formCustomer.name"
+      formControlName="name"
       class="ui-g-9"
     />
   </div>
@@ -17,7 +17,7 @@
       id="customerType"
       [options]="customerTypes"
       name="customerType"
-      [(ngModel)]="formCustomer.customerType"
+      formControlName="customerType"
       placeholder="- Select -"
       class="ui-g-9"
     ></p-dropdown>
@@ -29,7 +29,7 @@
       id="identityType"
       [options]="identityTypes"
       name="identityType"
-      [(ngModel)]="formCustomer.identityType"
+      formControlName="identityType"
       placeholder="- Select -"
       class="ui-g-4"
     ></p-dropdown>
@@ -37,7 +37,7 @@
       pInputText
       id="identityNumber"
       name="identityNumber"
-      [(ngModel)]="formCustomer.identityNumber"
+      formControlName="identityNumber"
       class="ui-g-5"
     />
   </div>
@@ -48,9 +48,8 @@
       id="country"
       [options]="countries"
       name="country"
-      [(ngModel)]="formCustomer.country"
+      formControlName="country"
       optionLabel="name"
-      dataKey="name"
       placeholder="- Select -"
       class="ui-g-9"
     >
@@ -62,7 +61,7 @@
     <p-inputSwitch
       id="citizen"
       name="citizen"
-      [(ngModel)]="formCustomer.citizen"
+      formControlName="citizen"
       class="ui-g-9"
     ></p-inputSwitch>
   </div>
@@ -72,7 +71,7 @@
     <p-calendar
       id="registrationDate"
       name="registrationDate"
-      [(ngModel)]="formCustomer.registrationDate"
+      formControlName="registrationDate"
       dateFormat="dd/mm/yy"
       class="ui-g-9"
     ></p-calendar>
@@ -84,7 +83,7 @@
       id="customerStatus"
       [options]="customerStatuses"
       name="status"
-      [(ngModel)]="formCustomer.status"
+      formControlName="status"
       placeholder="- Select -"
       class="ui-g-9"
     ></p-dropdown>
@@ -97,7 +96,7 @@
     </div>
 
     <div class="ui-toolbar-group-right">
-      <button pButton (click)="saveCustomer()" label="Save" [disabled]="form.invalid"></button>
+      <button pButton (click)="saveCustomer()" label="Save" [disabled]="customerForm?.invalid"></button>
     </div>
   </p-toolbar>
 

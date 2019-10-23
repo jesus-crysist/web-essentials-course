@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
 
     const customer = {
       ...changedCustomer,
-      country: changedCustomer.country.name,
+      country: changedCustomer.country && changedCustomer.country.name,
       customerType: CustomerType[changedCustomer.customerType],
       identityType: IdentityType[changedCustomer.identityType],
       status: CustomerStatus[changedCustomer.status]
