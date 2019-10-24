@@ -1,11 +1,13 @@
 document.getElementById('filterForm').addEventListener('submit', searchCocktails);
 
+// listIngredients();
+
 function craftUrl(base, params) {
   // append params as GET query params to base url and return string
   let url = base + '?';
   let paramArray = [];
 
-  for(let p in params) {
+  for (let p in params) {
     if (params.hasOwnProperty(p)) {
       paramArray.push(p + '=' + params[p]);
     }

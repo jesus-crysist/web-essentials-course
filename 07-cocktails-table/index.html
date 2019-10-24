@@ -7,7 +7,6 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
@@ -37,7 +36,10 @@
 
         <div>
           <label for="ingredient">Cocktail ingredient:</label>
-          <select id="ingredient" name="ingredient"></select>
+          <select id="ingredient" name="ingredient">
+            <!-- empty option so that search does not break -->
+            <option></option>
+          </select>
         </div>
 
         <div>
@@ -48,6 +50,16 @@
     </header>
 
     <table id="cocktailsTable">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Glass type</th>
+          <th>Instructions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
     </table>
 
   </article>

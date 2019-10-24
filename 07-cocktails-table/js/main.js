@@ -1,5 +1,32 @@
 document.getElementById('filterForm').addEventListener('submit', searchCocktails);
 
+window.addEventListener('load', listIngredients);
+
+function createAndAppendElement(elementName, parent, attributes) {
+
+  const el = document.createElement(elementName);
+
+  if (attributes && typeof attributes === 'object') {
+
+    for (let key in attributes) {
+
+      if (attributes.hasOwnProperty(key)) {
+        let value = attributes[key];
+
+        if (key === 'text') {
+          el.appendChild(document.createTextNode(value));
+        } else {
+          el.setAttribute(key, value);
+        }
+      }
+    }
+  }
+
+  parent.appendChild(el);
+
+  return el;
+}
+
 function craftUrl(base, params) {
   // append params as GET query params to base url and return string
   let url = base + '?';
@@ -46,7 +73,7 @@ function searchCocktails(event) {
   const url = craftUrl(cocktailsUrl, params);
 
   searchCocktailsPromise(url)
-    .then((responseJson) => console.log(responseJson));
+    .then((responseJson) => createDrinksTable(responseJson.drinks));
 }
 
 function doRequest(url, successCallback, errorCallback) {
@@ -87,4 +114,52 @@ function searchCocktailsPromise(url) {
 function listIngredients() {
 
   const ingredientListUrl = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list';
+
+  doRequest(
+    ingredientListUrl,
+    (responseObj) => {
+      const ingredients = responseObj.drinks;
+      const selectEl = document.getElementById('ingredient');
+
+      ingredients.forEach(ingredient =>
+        createAndAppendElement('option', selectEl, {
+          text: ingredient.strIngredient1,
+          value: ingredient.strIngredient1
+        })
+      );
+    },
+    (err) => console.log(err)
+  );
+}
+
+function createDrinksTable(drinks) {
+
+  const tableBody = document.querySelector('#cocktailsTable tbody');
+  const columns = [ 'strDrinkThumb', 'strDrink', 'strCategory', 'strGlass', 'strInstructions' ];
+
+  drinks.forEach(drink => {
+
+    const row = createAndAppendElement('tr', tableBody);
+
+    columns.forEach(col => {
+
+      if (col === 'strDrinkThumb') {
+        const cell = createAndAppendElement('td', row);
+        const img = createAndAppendElement('img', cell, {
+          src: drink[col],
+          alt: `${drink.strDrink} image`,
+          width: 80
+        });
+
+        img.addEventListener('click', (event) => window.open(drink[col]));
+
+      } else {
+        createAndAppendElement('td', row, {
+          text: drink[col]
+        });
+      }
+    });
+
+  })
+
 }

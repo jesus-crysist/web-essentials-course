@@ -264,3 +264,20 @@ textarea {
   }
 }
 
+table img {
+  width: 50px;
+}
+
+table tr.selected td {
+  border-top: 2px solid blue;
+  border-bottom: 2px solid blue;
+}
+
+table tr.selected td:first-child {
+  border-left: 2px solid blue;
+}
+
+table tr.selected td:last-child {
+  border-right: 2px solid blue;
+}
+
