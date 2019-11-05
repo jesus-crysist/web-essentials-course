@@ -1,0 +1,33 @@
+<section>
+  <header>
+    <h1>Random number trivia</h1>
+  </header>
+
+  <div>
+    <label for="numberInput">Get trivia for number:</label>
+    <input type="number" id="numberInput" name="numberInput" [(ngModel)]="numberInput" />
+  </div>
+
+  <div>
+    <label for="typeInput">Type of trivia:</label>
+    <select id="typeInput" name="typeInput" [(ngModel)]="typeInput">
+      <option value="trivia">trivia</option>
+      <option value="math">math</option>
+      <option value="date">date</option>
+      <option value="year">year</option>
+    </select>
+  </div>
+
+  <div>
+    <button (click)="getNumberTrivia()">Get trivia</button>
+    <p *ngIf="error">{{ error }}</p>
+  </div>
+
+  <p>OR</p>
+
+  <div>
+    <button (click)="getRandomTrivia()">Get random trivia!</button>
+  </div>
+  <hr />
+  <p>{{ trivia }}</p>
+</section>
