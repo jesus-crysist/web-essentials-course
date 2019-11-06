@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { CountryModel } from 'src/app/country.model';
 import { RxjsCountrySearchService } from 'src/app/rxjs-typeahead/rxjs-country-search.service';
 
@@ -19,11 +21,21 @@ export class RxjsTypeaheadComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     // set observable to "keyup" event for "inputEl.nativeElement"
-    // then wait for 400 milliseconds after last user input,
-    // trim values for spaces,
-    // filter out input that is less than 3 characters long,
-    // filter out same input values,
-    // call service's method "searchCountriesByName()"
-    // received value should be assigned to "countryList" property
+    fromEvent(this.inputEl.nativeElement, 'keyup')
+      .pipe(
+        // then wait for 400 milliseconds after last user input,
+        debounceTime(400),
+        map((event: KeyboardEvent) => (event.target as HTMLInputElement).value),
+        // trim values for spaces,
+        map((value: string) => value.trim()),
+        // filter out input that is less than 3 characters long,
+        filter(val => val.length > 2),
+        // filter out same input values,
+        distinctUntilChanged(),
+        // call service's method "searchCountriesByName()"
+        switchMap(val => this.countryService.searchCountriesByName(val))
+      )
+      // received value should be assigned to "countryList" property
+      .subscribe(countries => this.countryList = countries);
   }
 }
