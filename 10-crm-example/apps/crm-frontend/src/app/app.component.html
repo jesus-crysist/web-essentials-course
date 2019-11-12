@@ -1,0 +1,46 @@
+<section>
+  <header>
+    <h1>Customer registry</h1>
+  </header>
+
+  <div>
+
+    <!-- FIILTER FORM PLACEHOLDER -->
+
+  </div>
+
+  <button (click)="addCustomer()">Add Customer</button>
+
+  <p-table
+    [value]="customers$ | async"
+    [autoLayout]="true"
+  >
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Identity</th>
+        <th>Registration Date</th>
+        <th>Country of Origin</th>
+        <th>Citizen?</th>
+        <th>Status</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-customer>
+      <tr>
+        <td>{{ customer.name }}</td>
+        <td>
+          <ng-container *ngIf="customer.identityType && customer.identityNumber">
+            {{ customer.identityType }}: {{ customer.identityNumber }}
+          </ng-container>
+        </td>
+        <td>{{ customer.registrationDate | date:"dd/MM/yyyy" }}</td>
+        <td>{{ customer.country }}</td>
+        <td>{{ customer.citizen ? 'Yes' : 'No' }}</td>
+        <td>{{ customer.status }}</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</section>
