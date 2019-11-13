@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Customer, CustomerStatus, CustomerType } from '@crm-example/api-interfaces';
+import { Customer, CustomerStatus, CustomerType, IdentityType } from '@crm-example/api-interfaces';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -13,8 +13,13 @@ export class AppComponent {
 
   customers$: BehaviorSubject<Array<Customer>> = new BehaviorSubject([]);
 
-  constructor() {
+  filter: Partial<Customer> = {};
+  customer: Partial<Customer> = {};
 
+  showForm: boolean;
+
+  constructor(
+  ) {
     // `${this.baseUrl}/search?name=ar`
     fetch(`${this.baseUrl}/all`)
       .then(this.parseResponse)
@@ -24,12 +29,32 @@ export class AppComponent {
       .catch(err => console.error(err));
   }
 
+  searchCustomers(): void {
+
+    const params = Object.keys(this.filter)
+      .map(key => `${key}=${this.filter[key]}`)
+      .join('&');
+
+    fetch(`${this.baseUrl}/search?${params}`)
+      .then(this.parseResponse)
+      .then((jsonBody: Customer[]) => {
+        this.customers$.next(jsonBody);
+      })
+      .catch(err => console.error(err));
+  }
+
+  showAddForm(): void {
+    this.showForm = true;
+  }
+
   addCustomer(): void {
 
     const customer: Customer = {
-      name: 'Perica',
+      name: '',
+      identityType: IdentityType.REGISTRATION,
       customerType: CustomerType.INDIVIDUAL,
-      status: CustomerStatus.ACTIVE
+      status: CustomerStatus.ACTIVE,
+      ...this.customer
     };
 
     fetch(this.baseUrl, {
@@ -44,6 +69,7 @@ export class AppComponent {
       .then((cust: Customer) => {
         const currentCustomers = this.customers$.getValue();
         this.customers$.next([...currentCustomers, cust]);
+        this.showForm = false;
       })
       .catch(err => console.log(err));
   }

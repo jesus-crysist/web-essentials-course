@@ -6,10 +6,27 @@
   <div>
 
     <!-- FIILTER FORM PLACEHOLDER -->
+    <form #filterForm="ngForm" (ngSubmit)="searchCustomers()">
+
+      <div>
+        <label for="name">Name</label>
+        <input id="name" type="text" name="customerName"
+               [(ngModel)]="filter.name" />
+      </div>
+
+      <div>
+        <label for="identity">Identity</label>
+        <input id="identity" type="text" name="identityNumber"
+               [(ngModel)]="filter.identityNumber" />
+      </div>
+
+      <button type="submit">Find</button>
+
+    </form>
 
   </div>
 
-  <button (click)="addCustomer()">Add Customer</button>
+  <button (click)="showAddForm()">Add Customer</button>
 
   <p-table
     [value]="customers$ | async"
@@ -17,14 +34,14 @@
   >
 
     <ng-template pTemplate="header">
-      <tr>
-        <th>Name</th>
-        <th>Identity</th>
-        <th>Registration Date</th>
-        <th>Country of Origin</th>
-        <th>Citizen?</th>
-        <th>Status</th>
-      </tr>
+      <tr [class]="customer.name">
+      <th>Name</th>
+      <th>Identity</th>
+      <th>Registration Date</th>
+      <th>Country of Origin</th>
+      <th>Citizen?</th>
+      <th>Status</th>
+    </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-customer>
@@ -44,3 +61,23 @@
 
   </p-table>
 </section>
+
+<form
+  *ngIf="showForm"
+  #addForm="ngForm" (ngSubmit)="addCustomer()">
+
+  <div>
+    <label for="addName">Name</label>
+    <input id="addName" type="text" name="customerName"
+           [(ngModel)]="customer.name" required />
+  </div>
+
+  <div>
+    <label for="addIdentity">Identity</label>
+    <input id="addIdentity" type="text" name="identityNumber"
+           [(ngModel)]="customer.identityNumber" />
+  </div>
+
+  <button [disabled]="addForm.invalid" type="submit">Add</button>
+
+</form>
