@@ -1,5 +1,5 @@
 import { Customer } from '@crm-example/api-interfaces';
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 
 import { CrmApiService } from './crm-api.service';
 
@@ -25,5 +25,10 @@ export class CrmApiController {
   @Post('')
   addCustomer(@Body() customer: Customer): Customer {
     return this.crmApiService.addCustomer(customer);
+  }
+
+  @Put('')
+  updateCustomer(@Body() customer: Customer): Customer {
+    return this.crmApiService.updateCustomer(customer);
   }
 }

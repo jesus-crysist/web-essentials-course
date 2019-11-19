@@ -1,83 +1,22 @@
 <section>
   <header>
-    <h1>Customer registry</h1>
+    <h1>Customer Registry Management</h1>
   </header>
 
-  <div>
+  <crm-example-customer-list
+    *ngIf="!displayCustomerForm"
+    [customerList]="customerList$ | async"
+    (search)="filterCustomers($event)"
+    (addEdit)="showAddEditForm($event)"
+  ></crm-example-customer-list>
 
-    <!-- FIILTER FORM PLACEHOLDER -->
-    <form #filterForm="ngForm" (ngSubmit)="searchCustomers()">
+  <crm-example-add-customer
+    *ngIf="displayCustomerForm"
+    [customer]="selectedCustomer$ | async"
+    [countries]="countries$ | async"
+    (save)="saveCustomer($event)"
+    (goBack)="filterCustomers()"
+  ></crm-example-add-customer>
 
-      <div>
-        <label for="name">Name</label>
-        <input id="name" type="text" name="customerName"
-               [(ngModel)]="filter.name" />
-      </div>
 
-      <div>
-        <label for="identity">Identity</label>
-        <input id="identity" type="text" name="identityNumber"
-               [(ngModel)]="filter.identityNumber" />
-      </div>
-
-      <button type="submit">Find</button>
-
-    </form>
-
-  </div>
-
-  <button (click)="showAddForm()">Add Customer</button>
-
-  <p-table
-    [value]="customers$ | async"
-    [autoLayout]="true"
-  >
-
-    <ng-template pTemplate="header">
-      <tr [class]="customer.name">
-      <th>Name</th>
-      <th>Identity</th>
-      <th>Registration Date</th>
-      <th>Country of Origin</th>
-      <th>Citizen?</th>
-      <th>Status</th>
-    </tr>
-    </ng-template>
-
-    <ng-template pTemplate="body" let-customer>
-      <tr>
-        <td>{{ customer.name }}</td>
-        <td>
-          <ng-container *ngIf="customer.identityType && customer.identityNumber">
-            {{ customer.identityType }}: {{ customer.identityNumber }}
-          </ng-container>
-        </td>
-        <td>{{ customer.registrationDate | date:"dd/MM/yyyy" }}</td>
-        <td>{{ customer.country }}</td>
-        <td>{{ customer.citizen ? 'Yes' : 'No' }}</td>
-        <td>{{ customer.status }}</td>
-      </tr>
-    </ng-template>
-
-  </p-table>
 </section>
-
-<form
-  *ngIf="showForm"
-  #addForm="ngForm" (ngSubmit)="addCustomer()">
-
-  <div>
-    <label for="addName">Name</label>
-    <input id="addName" type="text" name="customerName"
-           [(ngModel)]="customer.name" required />
-  </div>
-
-  <div>
-    <label for="addIdentity">Identity</label>
-    <input id="addIdentity" type="text" name="identityNumber"
-           [(ngModel)]="customer.identityNumber" />
-  </div>
-
-  <button [disabled]="addForm.invalid" type="submit">Add</button>
-
-</form>

@@ -1,0 +1,79 @@
+<p-toolbar>
+
+  <div class="ui-toolbar-group-right">
+    <button
+      pButton
+      type="button"
+      (click)="goToCustomerForm()"
+      label="Add Customer"
+      icon="pi pi-plus"
+    ></button>
+  </div>
+
+</p-toolbar>
+
+<p-toolbar>
+
+  <div class="ui-toolbar-group-left">
+
+    <form class="filter-form" (ngSubmit)="filterCustomers()">
+
+      <span class="filter-list">
+
+        <span class="filter-item">
+          <label for="nameFilter">Name:</label>
+          <input type="text" id="nameFilter" name="name" [(ngModel)]="customer.name"/>
+        </span>
+
+        <span class="filter-item">
+          <label for="identityFilter">Identity:</label>
+          <input type="text" id="identityFilter" name="identity" [(ngModel)]="customer.identityNumber"/>
+        </span>
+
+      </span>
+
+      <span class="filter-button-wrapper">
+        <button pButton type="submit" label="Find"></button>
+      </span>
+
+    </form>
+
+  </div>
+
+</p-toolbar>
+
+<p-table
+  [value]="customerList"
+  [autoLayout]="true"
+>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Identity</th>
+      <th>Registration Date</th>
+      <th>Country of Origin</th>
+      <th>Citizen?</th>
+      <th>Status</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-customer>
+    <tr>
+      <td>{{ customer.name }}</td>
+      <td>
+        <ng-container *ngIf="customer.identityType && customer.identityNumber">
+          {{ customer.identityType }}: {{ customer.identityNumber }}
+        </ng-container>
+      </td>
+      <td>{{ customer.registrationDate | date:"dd/MM/yyyy" }}</td>
+      <td>{{ customer.country }}</td>
+      <td>{{ customer.citizen ? 'Yes' : 'No' }}</td>
+      <td>{{ customer.status }}</td>
+      <td>
+        <p-button (click)="goToCustomerForm(customer.id)" label="Edit"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+
+</p-table>

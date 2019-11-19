@@ -1,0 +1,23 @@
+:host .ui-toolbar-group-left {
+  width: 100%;
+}
+
+:host .filter-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+:host .filter-item {
+  margin: 0 5px;
+}
+
+:host .filter-item label {
+  margin-right: 5px;
+}
+
+:host .filter-button-wrapper {
+  justify-self: flex-end;
+}
