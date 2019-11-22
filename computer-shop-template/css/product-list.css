@@ -1,0 +1,36 @@
+/**
+ * PRODUCT LIST
+ */
+main .items {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+main .items article {
+  flex: 200px;
+  margin: 10px;
+}
+
+main .items article h1 {
+  font-size: 20px;
+}
+
+.items article img {
+  width: 180px;
+}
+
+.items article .price-holder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.items article .price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.items article .original-price {
+  font-size: 12px;
+  text-decoration: line-through;
+}
